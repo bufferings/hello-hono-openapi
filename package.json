@@ -2,7 +2,7 @@
   "name": "zod-brand",
   "type": "module",
   "scripts": {
-    "dev": "tsx watch src/index.ts",
+    "dev": "tsx watch src/server.ts",
     "build": "tsc --project tsconfig.build.json",
     "test": "vitest",
     "typecheck": "tsc --noEmit",

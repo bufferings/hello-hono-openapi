@@ -1,4 +1,3 @@
-import { serve } from '@hono/node-server';
 import { swaggerUI } from '@hono/swagger-ui';
 import { OpenAPIHono, createRoute, z } from '@hono/zod-openapi';
 
@@ -64,9 +63,9 @@ const route = createRoute({
   },
 });
 
-const index = new OpenAPIHono();
+const app = new OpenAPIHono();
 
-index.openapi(
+app.openapi(
   route,
   (c) => {
     const { id } = c.req.valid('param');
@@ -94,7 +93,7 @@ index.openapi(
 );
 
 // The OpenAPI documentation will be available at /doc
-index.doc('/doc', {
+app.doc('/doc', {
   openapi: '3.0.0',
   info: {
     version: '1.0.0',
@@ -103,14 +102,6 @@ index.doc('/doc', {
 });
 
 // Use the middleware to serve Swagger UI at /ui
-index.get('/ui', swaggerUI({ url: '/doc' }));
+app.get('/ui', swaggerUI({ url: '/doc' }));
 
-export default index;
-
-const port = 3000;
-console.log(`Server is running on http://localhost:${port}`);
-
-serve({
-  fetch: index.fetch,
-  port,
-});
+export default app;
