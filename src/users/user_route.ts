@@ -1,5 +1,4 @@
-import { type OpenAPIHono, createRoute, z } from '@hono/zod-openapi';
-
+import { OpenAPIHono, createRoute, z } from '@hono/zod-openapi';
 const ParamsSchema = z.object({
   id: z
     .string()
@@ -62,30 +61,29 @@ const route = createRoute({
   },
 });
 
-export const registerUserHandler = (app: OpenAPIHono) =>
-  app.openapi(
-    route,
-    (c) => {
-      const { id } = c.req.valid('param');
+export const userRoute = new OpenAPIHono().openapi(
+  route,
+  (c) => {
+    const { id } = c.req.valid('param');
+    return c.json(
+      {
+        id,
+        age: 20,
+        name: 'Ultra-man',
+      },
+      200, // You should specify the status code even if it is 200.
+    );
+  },
+  // Hook
+  (result, c) => {
+    if (!result.success) {
       return c.json(
         {
-          id,
-          age: 20,
-          name: 'Ultra-man',
+          code: 400,
+          message: 'Validation Error',
         },
-        200, // You should specify the status code even if it is 200.
+        400,
       );
-    },
-    // Hook
-    (result, c) => {
-      if (!result.success) {
-        return c.json(
-          {
-            code: 400,
-            message: 'Validation Error',
-          },
-          400,
-        );
-      }
-    },
-  );
+    }
+  },
+);

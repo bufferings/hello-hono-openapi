@@ -1,8 +1,12 @@
 import { swaggerUI } from '@hono/swagger-ui';
 import { OpenAPIHono } from '@hono/zod-openapi';
-import { registerUserHandler } from './users/user_handler.js';
+import { user2Route } from './users/user2_route.js';
+import { userRoute } from './users/user_route.js';
 
 const app = new OpenAPIHono();
+
+app.route('/', userRoute);
+app.route('/', user2Route);
 
 // The OpenAPI documentation will be available at /doc
 app.doc('/doc', {
@@ -15,7 +19,4 @@ app.doc('/doc', {
 
 // Use the middleware to serve Swagger UI at /ui
 app.get('/ui', swaggerUI({ url: '/doc' }));
-
-registerUserHandler(app);
-
 export default app;
