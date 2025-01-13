@@ -1,0 +1,23 @@
+{
+  "compilerOptions": {
+    "target": "ESNext",
+    "module": "NodeNext",
+    "strict": true,
+    // d.tsファイルをチェックしないことでトランスパイルの時間を節約する
+    "skipLibCheck": true,
+    // 型のimportにtypeを必須とすることでトランスパイル時に型のimportを除去しやすくする
+    "verbatimModuleSyntax": true,
+    // CommonJSのモジュールをES6モジュールと同じように扱えるようにする
+    "esModuleInterop": true,
+    // ファイル名の大文字小文字を区別する
+    "forceConsistentCasingInFileNames": true,
+    // トランスパイル後のファイルを出力するディレクトリ
+    "outDir": "dist",
+    // このディレクトリの中だけをimportで参照できるようにする
+    "rootDir": "src",
+    // ソースマップファイルを生成する
+    "sourceMap": true
+  },
+  // トランスパイル対象のファイル
+  "include": ["src/**/*"]
+}

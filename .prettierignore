@@ -1,0 +1,9 @@
+# まずは、すべてのファイルを対象外にする
+**/*
+
+# YAMLファイルはPrettierでフォーマットする
+!**/*.yml
+!**/*.yaml
+
+# lockファイルはYAMLだが対象外
+**/pnpm-lock.yaml

@@ -1,0 +1,25 @@
+pre-commit:
+  commands:
+    typecheck:
+      run: pnpm tsc --noEmit
+    biome:
+      glob: '*.{ts, tsx, js, json}'
+      run: pnpm biome check --fix {staged_files}
+      stage_fixed: true
+      skip:
+        - merge
+        - rebase
+    eslint:
+      glob: '*.{ts, tsx, js}'
+      run: pnpm eslint --fix {staged_files}
+      stage_fixed: true
+      skip:
+        - merge
+        - rebase
+    prettier:
+      glob: '*.{yml, yaml}'
+      run: pnpm prettier --write {staged_files}
+      stage_fixed: true
+      skip:
+        - merge
+        - rebase
