@@ -2,7 +2,7 @@
   "name": "zod-brand",
   "type": "module",
   "scripts": {
-    "dev": "tsx watch src/server.ts",
+    "dev": "tsx watch src/users/server.ts",
     "build": "tsc --project tsconfig.build.json",
     "test": "vitest",
     "typecheck": "tsc --noEmit",
@@ -11,13 +11,18 @@
     "format": "biome format --write . && prettier --write ."
   },
   "dependencies": {
+    "@asteasolutions/zod-to-openapi": "7.2.0",
     "@hono/node-server": "^1.13.7",
     "@hono/swagger-ui": "^0.5.0",
     "@hono/zod-openapi": "^0.18.3",
+    "@hono/zod-validator": "^0.4.2",
+    "@scalar/hono-api-reference": "^0.5.166",
     "date-fns": "^4.1.0",
     "hono": "^4.6.13",
+    "hono-openapi": "^0.3.1",
     "neverthrow": "^8.1.1",
-    "zod": "^3.24.1"
+    "zod": "^3.24.1",
+    "zod-openapi": "^4.2.2"
   },
   "devDependencies": {
     "@biomejs/biome": "1.9.4",

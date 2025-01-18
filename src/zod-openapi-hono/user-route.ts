@@ -1,13 +1,11 @@
 import { OpenAPIHono, createRoute, z } from '@hono/zod-openapi';
+
 const ParamsSchema = z.object({
   id: z
     .string()
     .min(3)
     .openapi({
-      param: {
-        name: 'id',
-        in: 'path',
-      },
+      param: { name: 'id', in: 'path' },
       example: '1212121',
     }),
 });
@@ -35,34 +33,33 @@ const ErrorSchema = z.object({
   }),
 });
 
-const route = createRoute({
-  method: 'get',
-  path: '/users/{id}',
-  request: {
-    params: ParamsSchema,
-  },
-  responses: {
-    200: {
-      content: {
-        'application/json': {
-          schema: UserSchema,
-        },
-      },
-      description: 'Retrieve the user',
-    },
-    400: {
-      content: {
-        'application/json': {
-          schema: ErrorSchema,
-        },
-      },
-      description: 'Returns an error',
-    },
-  },
-});
-
 export const userRoute = new OpenAPIHono().openapi(
-  route,
+  createRoute({
+    description: 'Say hello to the user',
+    method: 'get',
+    path: '/users/{id}',
+    request: {
+      params: ParamsSchema,
+    },
+    responses: {
+      200: {
+        content: {
+          'application/json': {
+            schema: UserSchema,
+          },
+        },
+        description: 'Retrieve the user',
+      },
+      400: {
+        content: {
+          'application/json': {
+            schema: ErrorSchema,
+          },
+        },
+        description: 'Returns an error',
+      },
+    },
+  }),
   (c) => {
     const { id } = c.req.valid('param');
     return c.json(
@@ -71,10 +68,9 @@ export const userRoute = new OpenAPIHono().openapi(
         age: 20,
         name: 'Ultra-man',
       },
-      200, // You should specify the status code even if it is 200.
+      200,
     );
   },
-  // Hook
   (result, c) => {
     if (!result.success) {
       return c.json(

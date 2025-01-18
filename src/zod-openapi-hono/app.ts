@@ -1,14 +1,11 @@
-import { swaggerUI } from '@hono/swagger-ui';
 import { OpenAPIHono } from '@hono/zod-openapi';
-import { user2Route } from './users/user2_route.js';
-import { userRoute } from './users/user_route.js';
+import { apiReference } from '@scalar/hono-api-reference';
+import { userRoute } from './user-route.js';
 
 const app = new OpenAPIHono();
 
 app.route('/', userRoute);
-app.route('/', user2Route);
 
-// The OpenAPI documentation will be available at /doc
 app.doc('/doc', {
   openapi: '3.0.0',
   info: {
@@ -18,5 +15,14 @@ app.doc('/doc', {
 });
 
 // Use the middleware to serve Swagger UI at /ui
-app.get('/ui', swaggerUI({ url: '/doc' }));
+app.get(
+  '/ui',
+  apiReference({
+    theme: 'purple',
+    spec: {
+      url: '/doc',
+    },
+  }),
+);
+
 export default app;
